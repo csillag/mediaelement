@@ -144,8 +144,9 @@ var vimeoIframeRenderer = {
 					switch (propName) {
 						case 'src':
 							var _url2 = typeof value === 'string' ? value : value[0].src;
+							var videoId = VimeoApi.getVimeoId(_url2);
 
-							vimeoPlayer.loadVideo({ url: _url2 }).then(function () {
+							vimeoPlayer.loadVideo(videoId).then(function () {
 								if (mediaElement.originalNode.autoplay) {
 									vimeoPlayer.play();
 								}
