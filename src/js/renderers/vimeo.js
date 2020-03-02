@@ -47,18 +47,28 @@ const VimeoApi = {
 	 * Valid URL format(s):
 	 *  - https://player.vimeo.com/video/59777392
 	 *  - https://vimeo.com/59777392
+	 *  - https://vimeo.com/59777392/61ee64f645
 	 *
 	 * @param {String} url - Vimeo full URL to grab the number Id of the source
 	 * @return {int}
 	 */
 	getVimeoId: (url) => {
-		if (url === undefined || url === null) {
+		if (url == null) {
 			return null;
 		}
 
 		const parts = url.split('?');
 		url = parts[0];
-		return parseInt(url.substring(url.lastIndexOf('/') + 1), 10);
+		const pathParts = url.split('/');
+
+		for (let i  = pathParts.length -1; i > -1 ; i--) {
+			const probeNumber = parseInt(pathParts[i], 10);
+			if (!isNaN(probeNumber)) {
+				return probeNumber;
+			}
+		}
+
+		return NaN;
 	}
 };
 
@@ -384,8 +394,8 @@ const vimeoIframeRenderer = {
 		const
 			height = mediaElement.originalNode.height,
 			width = mediaElement.originalNode.width,
-			vimeoContainer = document.createElement('iframe')
-			// standardUrl = `https://player.vimeo.com/video/${VimeoApi.getVimeoId(mediaFiles[0].src)}`
+			vimeoContainer = document.createElement('iframe'),
+			standardUrl = `https://player.vimeo.com/video/${VimeoApi.getVimeoId(mediaFiles[0].src)}`
 		;
 
 		let queryArgs = ~mediaFiles[0].src.indexOf('?') ? `?${mediaFiles[0].src.slice(mediaFiles[0].src.indexOf('?') + 1)}` : '';
@@ -405,7 +415,7 @@ const vimeoIframeRenderer = {
 		vimeoContainer.setAttribute('width', width);
 		vimeoContainer.setAttribute('height', height);
 		vimeoContainer.setAttribute('frameBorder', '0');
-		vimeoContainer.setAttribute('src', `${mediaFiles[0].src}${queryArgs}`);
+		vimeoContainer.setAttribute('src', `${standardUrl}${queryArgs}`);
 		vimeoContainer.setAttribute('webkitallowfullscreen', 'true');
 		vimeoContainer.setAttribute('mozallowfullscreen', 'true');
 		vimeoContainer.setAttribute('allowfullscreen', 'true');
