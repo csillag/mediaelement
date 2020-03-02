@@ -169,10 +169,9 @@ const vimeoIframeRenderer = {
 					if (vimeoPlayer !== null) {
 						switch (propName) {
 							case 'src':
-								const url = typeof value === 'string' ? value : value[0].src,
-									videoId = VimeoApi.getVimeoId(url);
+								const url = typeof value === 'string' ? value : value[0].src;
 
-								vimeoPlayer.loadVideo(videoId).then(() => {
+								vimeoPlayer.loadVideo({ url }).then(() => {
 									if (mediaElement.originalNode.autoplay) {
 										vimeoPlayer.play();
 									}
@@ -385,8 +384,8 @@ const vimeoIframeRenderer = {
 		const
 			height = mediaElement.originalNode.height,
 			width = mediaElement.originalNode.width,
-			vimeoContainer = document.createElement('iframe'),
-			standardUrl = `https://player.vimeo.com/video/${VimeoApi.getVimeoId(mediaFiles[0].src)}`
+			vimeoContainer = document.createElement('iframe')
+			// standardUrl = `https://player.vimeo.com/video/${VimeoApi.getVimeoId(mediaFiles[0].src)}`
 		;
 
 		let queryArgs = ~mediaFiles[0].src.indexOf('?') ? `?${mediaFiles[0].src.slice(mediaFiles[0].src.indexOf('?') + 1)}` : '';
@@ -399,14 +398,14 @@ const vimeoIframeRenderer = {
 			args.push('loop=1');
 		}
 
-		queryArgs = `${queryArgs}${queryArgs ? '&' : '?'}${args.join('&')}`
+		queryArgs = `${queryArgs}${queryArgs ? '&' : '?'}${args.join('&')}`;
 
 		// Create Vimeo <iframe> markup
 		vimeoContainer.setAttribute('id', vimeo.id);
 		vimeoContainer.setAttribute('width', width);
 		vimeoContainer.setAttribute('height', height);
 		vimeoContainer.setAttribute('frameBorder', '0');
-		vimeoContainer.setAttribute('src', `${standardUrl}${queryArgs}`);
+		vimeoContainer.setAttribute('src', `${mediaFiles[0].src}${queryArgs}`);
 		vimeoContainer.setAttribute('webkitallowfullscreen', 'true');
 		vimeoContainer.setAttribute('mozallowfullscreen', 'true');
 		vimeoContainer.setAttribute('allowfullscreen', 'true');
