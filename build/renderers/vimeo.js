@@ -41,8 +41,13 @@ var VimeoApi = {
 		url = parts[0];
 		var pathParts = url.split('/');
 
+		
+
 		for (var i = pathParts.length - 1; i > -1; i--) {
 			var probeNumber = parseInt(pathParts[i], 10);
+
+			
+
 			if (!isNaN(probeNumber)) {
 				return probeNumber;
 			}

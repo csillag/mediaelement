@@ -61,8 +61,13 @@ const VimeoApi = {
 		url = parts[0];
 		const pathParts = url.split('/');
 
-		for (let i  = pathParts.length -1; i > -1 ; i--) {
+		console.log('url, parts', url, pathParts);
+
+		for (let i  = pathParts.length - 1; i > -1 ; i--) {
 			const probeNumber = parseInt(pathParts[i], 10);
+
+			console.log('for', i, pathParts[i], probeNumber, isNaN(probeNumber));
+
 			if (!isNaN(probeNumber)) {
 				return probeNumber;
 			}
