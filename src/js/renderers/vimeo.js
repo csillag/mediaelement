@@ -57,20 +57,23 @@ const VimeoApi = {
 			return null;
 		}
 
-		const parts = url.split('?');
-		url = parts[0];
-		const pathParts = url.split('/');
+		console.log(0);
+		const playerLinkMatch = url.match(/https:\/\/player.vimeo.com\/video\/(\d+)/);
+		if (playerLinkMatch) {
+			console.log(1);
+			return parseInt(playerLinkMatch[1], 10);
+		}
 
-		console.log('url, parts', url, pathParts);
+		const vimeoLinkMatch = url.match(/https:\/\/vimeo.com\/(\d+)$/);
+		if (vimeoLinkMatch) {
+			console.log(2);
+			return parseInt(vimeoLinkMatch[1], 10);
+		}
 
-		for (let i  = pathParts.length - 1; i > -1 ; i--) {
-			const probeNumber = parseInt(pathParts[i], 10);
-
-			console.log('for', i, pathParts[i], probeNumber, isNaN(probeNumber));
-
-			if (!isNaN(probeNumber)) {
-				return probeNumber;
-			}
+		const privateVimeoLinkMatch = url.match(/https:\/\/vimeo.com\/(\d+)\/\w+$/);
+		if (privateVimeoLinkMatch) {
+			console.log(3);
+			return parseInt(privateVimeoLinkMatch[1], 10);
 		}
 
 		return NaN;
