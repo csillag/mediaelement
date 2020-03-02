@@ -41,12 +41,12 @@ var VimeoApi = {
 		url = parts[0];
 		var pathParts = url.split('/');
 
-		
+		console.log('url, parts', url, pathParts);
 
 		for (var i = pathParts.length - 1; i > -1; i--) {
 			var probeNumber = parseInt(pathParts[i], 10);
 
-			
+			console.log('for', i, pathParts[i], probeNumber, isNaN(probeNumber));
 
 			if (!isNaN(probeNumber)) {
 				return probeNumber;
@@ -210,7 +210,7 @@ var vimeoIframeRenderer = {
 							mediaElement.dispatchEvent(event);
 							break;
 						default:
-							
+							console.log('vimeo ' + vimeo.id, propName, 'UNSUPPORTED property');
 							break;
 					}
 				} else {

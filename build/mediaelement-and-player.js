@@ -4137,7 +4137,7 @@ var MediaElementPlayer = function () {
 								}
 							}, 20);
 						} catch (exp) {
-							
+							console.log(exp);
 						}
 					}
 
@@ -5824,7 +5824,7 @@ var PluginDetector = exports.PluginDetector = {
 					version = axDetect(ax);
 				}
 			} catch (e) {
-				
+				console.log(e);
 			}
 		}
 		return version;
@@ -5895,7 +5895,7 @@ var FlashMediaElementRenderer = {
 					try {
 						flash.flashApi['set_' + propName](value);
 					} catch (e) {
-						
+						console.log(e);
 					}
 				} else {
 					flash.flashApiStack.push({
@@ -5920,10 +5920,10 @@ var FlashMediaElementRenderer = {
 							try {
 								flash.flashApi['fire_' + methodName]();
 							} catch (e) {
-								
+								console.log(e);
 							}
 						} else {
-							
+							console.log('flash', 'missing method', methodName);
 						}
 					} else {
 						flash.flashApiStack.push({
@@ -7149,7 +7149,7 @@ var YouTubeIframeRenderer = {
 							mediaElement.dispatchEvent(event);
 							break;
 						default:
-							
+							console.log('youtube ' + youtube.id, propName, 'UNSUPPORTED property');
 							break;
 					}
 				} else {
