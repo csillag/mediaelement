@@ -380,6 +380,8 @@ var vimeoIframeRenderer = {
 			args.push('loop=1');
 		}
 
+		args.push("controls=false");
+
 		queryArgs = '' + queryArgs + (queryArgs ? '&' : '?') + args.join('&');
 
 		vimeoContainer.setAttribute('id', vimeo.id);
