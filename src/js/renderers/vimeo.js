@@ -416,6 +416,8 @@ const vimeoIframeRenderer = {
 			args.push('loop=1');
 		}
 
+		args.push("controls=false");
+
 		queryArgs = `${queryArgs}${queryArgs ? '&' : '?'}${args.join('&')}`
 
 		// Create Vimeo <iframe> markup
@@ -434,7 +436,7 @@ const vimeoIframeRenderer = {
 
 		VimeoApi.load({
 			iframe: vimeoContainer,
-			id: vimeo.id
+			id: vimeo.id,
 		});
 
 		vimeo.hide = () => {
