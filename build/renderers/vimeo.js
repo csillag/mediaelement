@@ -207,6 +207,9 @@ var vimeoIframeRenderer = {
 								});
 							}
 							break;
+						case "playbackRate":
+							vimeoPlayer.setPlaybackRate(value);
+							break;
 						case 'readyState':
 							var event = mejs.Utils.createEvent('canplay', vimeo);
 							mediaElement.dispatchEvent(event);
