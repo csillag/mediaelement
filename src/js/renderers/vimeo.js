@@ -236,6 +236,9 @@ const vimeoIframeRenderer = {
 									}).catch((error) => errorHandler(error));
 								}
 								break;
+							case "playbackRate":
+								vimeoPlayer.setPlaybackRate(value);
+								break;
 							case 'readyState':
 								const event = mejs.Utils.createEvent('canplay', vimeo);
 								mediaElement.dispatchEvent(event);
