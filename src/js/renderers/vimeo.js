@@ -111,6 +111,8 @@ const vimeoIframeRenderer = {
 		let
 			paused = true,
 			volume = 1,
+			playbackRate = 1,
+			settingPlaybackRate = 1,
 			oldVolume = volume,
 			currentTime = 0,
 			bufferedTime = 0,
@@ -175,6 +177,8 @@ const vimeoIframeRenderer = {
 								};
 							case 'readyState':
 								return readyState;
+							case 'playbackRate':
+								return playbackRate;
 						}
 						return value;
 					} else {
@@ -237,6 +241,7 @@ const vimeoIframeRenderer = {
 								}
 								break;
 							case "playbackRate":
+								settingPlaybackRate = value;
 								vimeoPlayer.setPlaybackRate(value);
 								break;
 							case 'readyState':
@@ -393,6 +398,11 @@ const vimeoIframeRenderer = {
 				const event = mejs.Utils.createEvent('ended', vimeo);
 				mediaElement.dispatchEvent(event);
 			});
+			vimeoPlayer.on('playbackratechange', () => {
+				playbackRate = settingPlaybackRate;
+				const event = mejs.Utils.createEvent("ratechange", vimeo);
+				mediaElement.dispatchEvent(event);
+			})
 
 			events = ['rendererready', 'loadedmetadata', 'loadeddata', 'canplay'];
 
